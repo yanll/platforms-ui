@@ -1,0 +1,14 @@
+*.iml
+*.idea
+.settings
+.project
+.classpath
+target
+**/*.iml
+**/*.idea
+**/.settings
+**/.project
+**/.classpath
+**/target/
+**/node_modules/
+**/dist/
