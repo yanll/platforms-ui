@@ -4,4 +4,4 @@
 
 npm install --global vue-cli
 
-vue init webpack vuedemo
+vue init webpack auth-ui
