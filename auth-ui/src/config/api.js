@@ -22,12 +22,12 @@ function filter_null(o) {
   return o
 }
 /*
-  接口处理函数
-  这个函数每个项目都是不一样的，我现在调整的是适用于
-  https://cnodejs.org/api/v1 的接口，如果是其他接口
-  需要根据接口的参数进行调整。参考说明文档地址：
-  https://cnodejs.org/topic/5378720ed6e2d16149fa16bd
-*/
+ 接口处理函数
+ 这个函数每个项目都是不一样的，我现在调整的是适用于
+ https://cnodejs.org/api/v1 的接口，如果是其他接口
+ 需要根据接口的参数进行调整。参考说明文档地址：
+ https://cnodejs.org/topic/5378720ed6e2d16149fa16bd
+ */
 function _api_base(method, url, params, success, failure) {
   var r = request(method, url).type('text/plain')
   if (params) {
@@ -41,11 +41,12 @@ function _api_base(method, url, params, success, failure) {
       r = r.query(params)
     }
   }
-  r.end(function(err, res) {
+  r.end(function (err, res) {
     if (err) {
       alert('api error, HTTP CODE: ' + res.status);
       return;
-    }; 
+    }
+    ;
     if (res.body.code == 200) {
       if (success) {
         success(res.body);
@@ -61,16 +62,16 @@ function _api_base(method, url, params, success, failure) {
 };
 // 返回在vue模板中的调用接口
 export default {
-  get: function(url, params, success, failure) {
+  get: function (url, params, success, failure) {
     return _api_base('GET', root + '/' + url, params, success, failure)
   },
-  post: function(url, params, success, failure) {
+  post: function (url, params, success, failure) {
     return _api_base('POST', root + '/' + url, params, success, failure)
   },
-  put: function(url, params, success, failure) {
+  put: function (url, params, success, failure) {
     return _api_base('PUT', root + '/' + url, params, success, failure)
   },
-  delete: function(url, params, success, failure) {
+  delete: function (url, params, success, failure) {
     return _api_base('DELETE', root + '/' + url, params, success, failure)
   },
 }

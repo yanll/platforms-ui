@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import TopBar from './TopBar.vue'
+  import TopBar from './TopBar.vue'
 
-export default {
-  components: {
-    TopBar
+  export default {
+    components: {
+      TopBar
+    }
   }
-}
 </script>
