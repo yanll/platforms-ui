@@ -1,5 +1,5 @@
-<template id="menu_index">
-  <div>
+<template>
+  <div style="background-color: white">
     <navBar :navbar_title="navbar_title" :navbar_data="navbar_data"></navBar>
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="menuName" label="菜单名称" width="180"></el-table-column>
@@ -31,7 +31,7 @@
             url: ''
           }, {
             title: '菜单管理',
-            url: '../page/menu/index.vue'
+            url: '../pages/menu/index.vue'
           }]
         },
         list: []

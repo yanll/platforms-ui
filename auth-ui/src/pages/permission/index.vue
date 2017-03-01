@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: white">
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="permissionName" label="权限名称" width="180"></el-table-column>
       <el-table-column prop="url" label="路由地址"></el-table-column>

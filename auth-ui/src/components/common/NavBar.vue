@@ -1,7 +1,6 @@
-
 <template lang="html">
   <!--<mime ref="child"></mime>-->
-  <div class="progress-bar" :navbar_data="navbar_data" style="background-color: white;font-size: 12px;">
+  <div class="progress-bar" :navbar_data="navbar_data" style="font-size: 12px;">
     {{navbar_title}}
   </div>
 </template>
@@ -20,8 +19,8 @@
       load_data: function (params) {
         var v = this
         if (!params) params = {}
-        console.log(v.navbar_title);
-        console.log(v.navbar_data.data);
+        if (v.navbar_title)console.log(v.navbar_title);
+        if (v.navbar_data)console.log(v.navbar_data.data);
       }
     },
     props: {

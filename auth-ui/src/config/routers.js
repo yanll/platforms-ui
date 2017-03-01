@@ -1,8 +1,9 @@
 // 引用模板
-import home from '../page/home.vue'
-import user from '../page/user/index.vue'
-import menu from '../page/menu/index.vue'
-import permission from '../page/permission/index.vue'
+import home from '../pages/home.vue'
+import user from '../pages/user/index.vue'
+import menu from '../pages/menu/index.vue'
+import permission from '../pages/permission/index.vue'
+import permission_group from '../pages/permission_group/index.vue'
 // 配置路由
 export default [
   {
@@ -20,5 +21,9 @@ export default [
   {
     path: '/permission',
     component: permission
+  },
+  {
+    path: '/permission_group',
+    component: permission_group
   },
 ]
