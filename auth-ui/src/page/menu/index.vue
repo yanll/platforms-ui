@@ -1,73 +1,61 @@
-<template>
+<template id="menu_index">
   <div>
+    <navBar :navbar_title="navbar_title" :navbar_data="navbar_data"></navBar>
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="menuName" label="菜单名称" width="180"></el-table-column>
       <el-table-column prop="url" label="路由地址"></el-table-column>
     </el-table>
-    <Paginator :page="page" :limit="limit" :total="total"></Paginator>
+    <paginator @load_data="load_data" ref="paginator" :page="page" :limit="limit" :total="total"></paginator>
   </div>
 </template>
 
 
 <script>
   import Paginator from '../../components/common/Paginator.vue'
+  import NavBar from '../../components/common/NavBar.vue'
 
   export default {
     components: {
-      Paginator
+      "paginator": Paginator,
+      "navBar": NavBar
     },
     data() {
       return {
-        list: [],
-        param: {} // 向服务器传递参数
+        navbar_title: '首页 > 系统管理 > 菜单管理',
+        navbar_data: {
+          data: [{
+            title: '首页',
+            url: '/'
+          }, {
+            title: '系统管理',
+            url: ''
+          }, {
+            title: '菜单管理',
+            url: '../page/menu/index.vue'
+          }]
+        },
+        list: []
       }
     },
     created () {
-      var v = this;
-      console.log("-----1-----------3123-----------");
-      console.log(v);
-      console.log(v.total);
-      this.get_data();
+      this.load_data();
     },
-    computed:{
-      pages:function(){
-        console.log('2222222222')
-        var pag = [];
-        if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
-          //总页数和要显示的条数那个大就显示多少条
-          var i = Math.min(this.showItem,this.allpage);
-          while(i){
-            pag.unshift(i--);
-          }
-        }else{ //当前页数大于显示页数了
-          var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
-            i = this.showItem;
-          if( middle >  (this.allpage - this.showItem)  ){
-            middle = (this.allpage - this.showItem) + 1
-          }
-          while(i--){
-            pag.push( middle++ );
-          }
-        }
-        return pag
-      }
-    },
+    computed: {},
     methods: {
-      handleSizeChange(val) {
-        console.log(`每页1 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        this.currentPage = val;
-        console.log(`当前页1: ${val}`);
-      },
-      get_data: function (params) {
-        var v = this
-        if (!params) params = {}
-        v.$api.get('/menu/list', params, function (resp) {
+      load_data: function (params) {
+        console.log('MENU:load_data');
+        var v = this;
+        var url_ = '/menu/list';
+        if (v.$refs.paginator) {
+          var pagination = '?page=' + v.$refs.paginator.page + '&limit=' + v.$refs.paginator.limit;
+          url_ += pagination;
+        }
+        console.log('URL:' + url_);
+        v.$api.get(url_, params, function (resp) {
           v.list = resp.data.items;
-          v.page = resp.data.paginator.page;
-          v.limit = resp.data.paginator.limit;
-          v.total = resp.data.paginator.totalCount;
+          v.total = resp.data.pagination.total;
+          //父调用子
+          v.$refs.paginator.logs(resp);
         })
       },
     },

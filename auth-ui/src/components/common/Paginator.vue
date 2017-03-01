@@ -7,7 +7,8 @@
       :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :page-sizes="[10, 20]"
+      @logs="logs"
+      :page-sizes="[10, 20, 50]"
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
   </div>
@@ -16,12 +17,18 @@
   export default {
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.limit = val;
+        this.$emit('load_data');
+        console.log(`limit:${val}`);
       },
       handleCurrentChange(val) {
-        this.currentPage = val;
-        console.log(`当前页: ${val}`);
-      }
+        this.page = val;
+        this.$emit('load_data');
+        console.log(`page:${val}`);
+      },
+      logs(val) {
+        console.log(val);
+      },
     },
     props: {
       page: {type: Number, default: 1},
@@ -29,11 +36,7 @@
       total: {type: Number, default: 0}
     },
     data() {
-      return {
-        page: 1,
-        total: 10,
-        limit: 0
-      };
+      return {};
     }
   }
 </script>

@@ -15,6 +15,8 @@ const router = new VueRouter({
   routes
 })
 
+Vue.config.silent = true
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

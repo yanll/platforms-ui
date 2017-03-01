@@ -1,7 +1,28 @@
 // 配置API接口地址
-var root = 'http://localhost:8080';
+var API_SERVER = 'http://localhost:8080';
 // 引用superagent
 var request = require('superagent');
+
+// 返回在vue模板中的调用接口
+export default {
+  get: function (url, params, success, failure) {
+    return _api_base('GET', 'text/plain', url, params, success, failure)
+  },
+  post: function (url, type, params, success, failure) {
+    return _api_base('POST', 'application/json', url, params, success, failure)
+  },
+  put: function (url, params, success, failure) {
+    return _api_base('PUT', 'text/plain', url, params, success, failure)
+  },
+  delete: function (url, params, success, failure) {
+    return _api_base('DELETE', 'text/plain', url, params, success, failure)
+  },
+  upload: function (url, type, params, success, failure) {
+    return _api_base('POST', 'multipart/form-data', url, params, success, failure)
+  },
+}
+
+
 // 自定义判断元素类型JS
 function toType(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -23,13 +44,9 @@ function filter_null(o) {
 }
 /*
  接口处理函数
- 这个函数每个项目都是不一样的，我现在调整的是适用于
- https://cnodejs.org/api/v1 的接口，如果是其他接口
- 需要根据接口的参数进行调整。参考说明文档地址：
- https://cnodejs.org/topic/5378720ed6e2d16149fa16bd
  */
-function _api_base(method, url, params, success, failure) {
-  var r = request(method, url).type('text/plain')
+function _api_base(method, type, url, params, success, failure) {
+  var r = request(method, API_SERVER + url).type(type)
   if (params) {
     params = filter_null(params);
     if (method === 'POST' || method === 'PUT') {
@@ -46,7 +63,6 @@ function _api_base(method, url, params, success, failure) {
       alert('api error, HTTP CODE: ' + res.status);
       return;
     }
-    ;
     if (res.body.code == 200) {
       if (success) {
         success(res.body);
@@ -60,18 +76,3 @@ function _api_base(method, url, params, success, failure) {
     }
   });
 };
-// 返回在vue模板中的调用接口
-export default {
-  get: function (url, params, success, failure) {
-    return _api_base('GET', root + '/' + url, params, success, failure)
-  },
-  post: function (url, params, success, failure) {
-    return _api_base('POST', root + '/' + url, params, success, failure)
-  },
-  put: function (url, params, success, failure) {
-    return _api_base('PUT', root + '/' + url, params, success, failure)
-  },
-  delete: function (url, params, success, failure) {
-    return _api_base('DELETE', root + '/' + url, params, success, failure)
-  },
-}

@@ -1,6 +1,7 @@
 <template lang="html">
-  <el-menu id="nav-menu" theme="dark"  >
-    <div class="logo"></div>
+
+  <div class="logo">333</div>
+  <el-menu id="nav-menu">
     <el-menu-item index="2"><router-link to="/" class="nav-link"><i class="el-icon-menu"></i>首页</router-link></el-menu-item>
     <el-submenu index="10">
       <template slot="title" index="2"><i class="el-icon-menu"></i>系统管理</template>
