@@ -2,20 +2,24 @@
   <div style="background-color: white">
     <navBar :navbar_title="navbar_title"></navBar>
     <el-row>
-      <el-button type="text" @click="dialog_form = true">添加</el-button>
+      <el-button type="text" @click="detail">添加</el-button>
     </el-row>
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="id" label="ID" width="180"></el-table-column>
       <el-table-column prop="groupName" label="权限组名"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="80">
+      <el-table-column fixed="right" label="操作" width="280">
         <template scope="scope">
-          <el-button type="text" size="small">查看用户</el-button>
+          <el-button type="text" size="small" @click="permissions(scope.row)">权限设置</el-button>
+          <el-button type="text" size="small">用户设置</el-button>
+          <el-button type="text" size="small" @click="detail(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="del(scope.$index, scope.row)">删除</el-button>
+          <el-button type="text" size="small" @click="detail(scope.row)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-dialog title="添加权限分组" v-model="dialog_form"
                :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="200px">
         <el-form-item label="权限组名">
           <el-input v-model="form.groupName"></el-input>
         </el-form-item>
@@ -67,10 +71,48 @@
       },
       save: function () {
         var v = this;
-        v.dialog_form = false
-        console.log(v);
-        console.log(v.form);
-        console.log(v.form.groupName);
+        var params = {
+          groupName: v.form.groupName,
+          id: v.form.id
+        };
+        var url_ = '/permission_group';
+        if (params.id && params.id != '') {
+          v.$api.put(url_, params, function (resp) {
+            v.dialog_form = false;
+            v.load_data();
+          })
+        } else {
+          v.$api.post(url_, params, function (resp) {
+            v.dialog_form = false;
+            v.load_data();
+          })
+        }
+      },
+      del: function (index, row) {
+        var v = this;
+        var url_ = '/permission_group/' + row.id;
+        v.$api.delete(url_, {}, function (resp) {
+          v.load_data();
+        })
+      },
+      detail: function (row) {
+        var v = this;
+        v.dialog_form = true;
+        if (!row.id) {
+          //v.$refs['form'].resetFields();//todo-yll-fixme 不起作用
+          v.form.groupName = '';
+          v.form.id = '';
+          return;
+        }
+        var url_ = '/permission_group/' + row.id;
+        v.$api.get(url_, {}, function (resp) {
+          v.form.groupName = resp.data.groupName;
+          v.form.id = resp.data.id;
+        })
+      },
+      permissions: function (row) {
+        var v = this;
+        v.$router.push({path: 'permission_group/' + row.id + '/permissions'});
       }
     },
   }

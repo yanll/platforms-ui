@@ -8,11 +8,11 @@ export default {
   get: function (url, params, success, failure) {
     return _api_base('GET', 'text/plain', url, params, success, failure)
   },
-  post: function (url, type, params, success, failure) {
+  post: function (url, params, success, failure) {
     return _api_base('POST', 'application/json', url, params, success, failure)
   },
   put: function (url, params, success, failure) {
-    return _api_base('PUT', 'text/plain', url, params, success, failure)
+    return _api_base('PUT', 'application/json', url, params, success, failure)
   },
   delete: function (url, params, success, failure) {
     return _api_base('DELETE', 'text/plain', url, params, success, failure)
