@@ -10,12 +10,9 @@
     </el-tree>
     <el-dialog title="菜单" v-model="dialog_form"
                :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-      <el-form ref="form" :model="form" label-width="200px">
+      <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="系统名称">
           <portalSelect placeholder="请选择系统名称" ref="portalSelect" :dict_options="portal_options"/>
-        </el-form-item>
-        <el-form-item label="父级菜单">
-          <el-input readonly disabled="true" v-model="form.parentId"></el-input>
         </el-form-item>
         <el-form-item label="菜单名称">
           <el-input v-model="form.menuName"></el-input>
@@ -58,7 +55,7 @@
         dialog_form: false,
         form: {
           menuName: '',
-          parentId: '系统管理',
+          parentName: '系统管理',
           url: '',
           idx: ''
         },
@@ -74,8 +71,7 @@
         let ope;
         if (data.editable != 0) {
           ope = (
-            <span style="margin-left: 10px;">
-              <el-button type="text" size="small" on-click={() => this.detail(store, data)}>编辑</el-button>
+            <span style="margin-left: 10px; margin-right: 10px;">
               <el-button type="text" size="small" on-click={() => this.del(store, data)}>删除</el-button>
             </span>
           )
@@ -86,8 +82,9 @@
               <span>{node.label}</span>
             </span>
             <span style="float: right; margin-right: 12px;">
-              <el-button type="text" size="small" on-click={() => this.detail(store, data)}>新增子级菜单</el-button>
+              <el-button type="text" size="small" on-click={() => this.add(store, data)}>新增子级菜单</el-button>
               {ope}
+              <el-button type="text" size="small" on-click={() => this.detail(store, data)}>详情</el-button>
             </span>
           </span>
         );
@@ -111,13 +108,22 @@
           v.tree_data = resp.data;
         })
       },
+      add: function (store, data) {
+        var v = this;
+      },
       detail: function (store, data) {
         var v = this;
         v.dialog_form = true;
-        var url_ = '/permission_group/list';
+        var url_ = '/menu/' + data.id;
+        v.form.menuName = '';
+        v.form.url = '';
+        v.form.idx = '';
         v.$api.get(url_, {}, function (resp) {
-          v.$refs.portalSelect.change('-----------');
-          //v.$refs.portalSelect.setValue(2);
+          var dat = resp.data;
+          v.form.menuName = data.menu_name;
+          v.form.url = data.url;
+          v.form.idx = data.idx;
+          v.$refs.portalSelect.setValue(data.portal_id);
         })
       },
       del: function (store, data) {
@@ -126,6 +132,9 @@
         v.$api.delete(url_, {}, function (resp) {
           v.load_data();
         })
+      },
+      save: function () {
+        console.log('save');
       },
     },
   }

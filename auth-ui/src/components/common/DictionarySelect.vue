@@ -21,10 +21,11 @@
     },
     methods: {
       change(v){
-        console.log(v);
+        if (!v) return;
+        console.log(v)
       },
       setValue(v){
-        console.log(v);
+        if (!v) return;
         this.value = v;
       }
     }
