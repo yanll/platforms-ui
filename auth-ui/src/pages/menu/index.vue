@@ -11,11 +11,11 @@
     <el-dialog title="菜单" v-model="dialog_form"
                :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
       <el-form ref="form" :model="form" label-width="200px">
-        <el-form-item label="PortalID">
-          <el-input v-model="form.portalId"></el-input>
+        <el-form-item label="系统名称">
+          <portalSelect placeholder="请选择系统名称" ref="portalSelect" :dict_options="portal_options"/>
         </el-form-item>
         <el-form-item label="父级菜单">
-          <el-input v-model="form.parentId"></el-input>
+          <el-input readonly disabled="true" v-model="form.parentId"></el-input>
         </el-form-item>
         <el-form-item label="菜单名称">
           <el-input v-model="form.menuName"></el-input>
@@ -38,10 +38,14 @@
 
 <script>
   import NavBar from '../../components/common/NavBar.vue'
+  import DictionarySelect from '../../components/common/DictionarySelect.vue'
+  import Dict from '../../components/const/Dict.vue'
+
 
   export default {
     components: {
-      "navBar": NavBar
+      "navBar": NavBar,
+      "portalSelect": DictionarySelect
     },
     data() {
       return {
@@ -54,9 +58,11 @@
         dialog_form: false,
         form: {
           menuName: '',
+          parentId: '系统管理',
           url: '',
           idx: ''
-        }
+        },
+        portal_options: Dict.SYSTEM_PORTAL
       }
     },
     created () {
@@ -108,16 +114,10 @@
       detail: function (store, data) {
         var v = this;
         v.dialog_form = true;
-        if (!data.id) {
-          //v.$refs['form'].resetFields();//todo-yll-fixme 不起作用
-          v.form.groupName = '';
-          v.form.id = '';
-          return;
-        }
-        var url_ = '/permission_group/' + row.id;
+        var url_ = '/permission_group/list';
         v.$api.get(url_, {}, function (resp) {
-          v.form.groupName = resp.data.groupName;
-          v.form.id = resp.data.id;
+          v.$refs.portalSelect.change('-----------');
+          //v.$refs.portalSelect.setValue(2);
         })
       },
       del: function (store, data) {

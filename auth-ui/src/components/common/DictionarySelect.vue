@@ -1,10 +1,8 @@
+<!--todo-yll-fixme value 默认值设置-->
 <template>
-  <el-select v-model="value" placeholder="请选择">
-    <el-option
-      v-for="item in options"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
+  <el-select v-model="value" :dict_options="dict_options" :placeholder="placeholder" @change="change"
+             @setValue="setValue">
+    <el-option v-for="item in dict_options" :label="item.desc" :value="item.value"></el-option>
   </el-select>
 </template>
 
@@ -12,23 +10,22 @@
   export default {
     data() {
       return {
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        dict_options: [],
+        placeholder: '',
         value: ''
+      }
+    },
+    props: {
+      dict_options: {type: Object, defaut: {}},
+      placeholder: {type: String, defaut: ''}
+    },
+    methods: {
+      change(v){
+        console.log(v);
+      },
+      setValue(v){
+        console.log(v);
+        this.value = v;
       }
     }
   }
