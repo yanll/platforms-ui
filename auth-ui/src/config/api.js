@@ -60,7 +60,11 @@ function _api_base(method, type, url, params, success, failure) {
   }
   r.end(function (err, res) {
     if (err) {
-      alert('api error, HTTP CODE: ' + res.status);
+      if (!res) {
+        console.log('服务器无响应！');
+        return;
+      }
+      console.log('API Error, HTTP CODE: ' + res.status);
       return;
     }
     if (res.body.code == 200) {
@@ -71,7 +75,7 @@ function _api_base(method, type, url, params, success, failure) {
       if (failure) {
         failure(res.body);
       } else {
-        alert('error: ' + JSON.stringify(res.body));
+        console.log('error: ' + JSON.stringify(res.body));
       }
     }
   });
