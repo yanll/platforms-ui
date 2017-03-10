@@ -118,7 +118,6 @@
           v.form.nickname = '';
           v.form.id = '';
           v.form.enabled = 0;
-          v.$refs.enabledSelect.setValue(0);
           return;
         }
         var url_ = '/user/' + row.id;
@@ -127,6 +126,8 @@
           v.form.username = resp.data.username;
           v.form.nickname = resp.data.nickname;
           v.form.enabled = resp.data.enabled;
+          console.log(v.$refs.enabledSelect);
+          console.log(resp.data.enabled);
           v.$refs.enabledSelect.setValue(resp.data.enabled);
           v.form.id = resp.data.id;
         })

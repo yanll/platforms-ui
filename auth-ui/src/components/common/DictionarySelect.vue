@@ -25,6 +25,7 @@
         console.log(v)
       },
       setValue(v){
+        console.log('set select value:' + v)
         if (!v) return;
         this.value = v;
       }
