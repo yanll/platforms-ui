@@ -27,7 +27,8 @@
           <el-input v-model="form.nickname"></el-input>
         </el-form-item>
         <el-form-item label="启用">
-          <el-input v-model="form.enabled"></el-input>
+          <enabledSelect v-model="form.enabled" placeholder="请选择是否启用" ref="enabledSelect"
+                         :dict_options="enabled_options"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -43,17 +44,26 @@
 <script>
   import Paginator from '../../components/common/Paginator.vue'
   import NavBar from '../../components/common/NavBar.vue'
+  import DictionarySelect from '../../components/common/DictionarySelect.vue'
+  import Dict from '../../components/const/Dict.vue'
   export default {
     components: {
       "paginator": Paginator,
-      "navBar": NavBar
+      "navBar": NavBar,
+      "enabledSelect": DictionarySelect
     },
     data() {
       return {
         navbar_title: '首页 > 系统管理 > 用户管理',
         list: [],
         dialog_form: false,
-        form: {}
+        enabled_options: Dict.YESNO,
+        form: {
+          username: '',
+          nickname: '',
+          enabled: 0,
+          id: ''
+        }
       }
     },
     created () {
@@ -104,20 +114,23 @@
         var v = this;
         v.dialog_form = true;
         if (!row.id) {
-          v.$refs['form'].resetFields();//todo-yll-fixme 不起作用
+          v.form.username = '';
+          v.form.nickname = '';
+          v.form.id = '';
+          v.form.enabled = 0;
+          v.$refs.enabledSelect.setValue(0);
           return;
         }
         var url_ = '/user/' + row.id;
         v.$api.get(url_, {}, function (resp) {
+          console.log(resp);
           v.form.username = resp.data.username;
           v.form.nickname = resp.data.nickname;
           v.form.enabled = resp.data.enabled;
+          v.$refs.enabledSelect.setValue(resp.data.enabled);
           v.form.id = resp.data.id;
-          console.log(v.$refs);
-          console.log(v.$refs['form']);
-          v.$refs['form'].resetFields();
         })
-      },
+      }
     },
   }
 </script>
