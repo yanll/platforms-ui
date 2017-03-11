@@ -11,6 +11,16 @@
     YESNO_: {
       Y: 1,
       N: 0
+    },
+    getDesc: function (dict_arr, value) {
+      for (var i = 0; i < dict_arr.length; i++) {
+        if (dict_arr[i].value == value) return dict_arr[i].desc;
+      }
+    },
+    getValue: function (dict_arr, desc) {
+      for (var i = 0; i < dict_arr.length; i++) {
+        if (dict_arr[i].desc == value) return dict_arr[i].value;
+      }
     }
   }
 </script>

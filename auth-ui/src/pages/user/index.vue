@@ -7,28 +7,26 @@
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="username" label="用户名称" width="180"></el-table-column>
       <el-table-column prop="nickname" label="昵称"></el-table-column>
-      <el-table-column prop="enabled" label="是否启用"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="240">
+      <el-table-column prop="enabled" label="是否启用" :formatter="formatEnabled"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="180">
         <template scope="scope">
           <el-button type="text" size="small" @click="resetpwd(scope.row)">重置密码</el-button>
           <el-button type="text" size="small" @click="detail(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="del(scope.row)">删除</el-button>
-          <el-button type="text" size="small" @click="detail(scope.row)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-dialog title="用户" v-model="dialog_form"
                :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="用户名">
+        <el-form-item label="用户名" :rules="[{required: true, message: '请输入用户名称', trigger: 'blur'}]">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="昵称">
           <el-input v-model="form.nickname"></el-input>
         </el-form-item>
         <el-form-item label="启用">
-          <enabledSelect placeholder="请选择是否启用" ref="enabledSelect"
-                         :dict_options="enabled_options"/>
+          <enabledSelect placeholder="请选择是否启用" ref="enabledSelect" :dict_options="enabled_options"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -86,6 +84,13 @@
       },
       save: function () {
         var v = this;
+        //todo-yll-fixme 验证不生效
+        v.$refs['form'].validate(valid => {
+          if (!valid) {
+            console.log('validate error!');
+            return;
+          }
+        });
         var params = {
           username: v.form.username,
           nickname: v.form.nickname,
@@ -114,6 +119,7 @@
       },
       detail: function (row) {
         var v = this;
+        //todo-yll-fixme 设置用户名称不可编辑
         v.dialog_form = true;
         if (row.id == undefined) {
           v.form.username = '';
@@ -129,7 +135,10 @@
           v.$refs.enabledSelect.setValue(resp.data.enabled);
           v.form.id = resp.data.id;
         })
+      },
+      formatEnabled(row, column) {
+        return Dict.getDesc(Dict.YESNO, row.enabled);
       }
-    },
+    }
   }
 </script>
