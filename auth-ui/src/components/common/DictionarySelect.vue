@@ -21,12 +21,12 @@
     },
     methods: {
       change(v){
-        if (!v) return;
-        console.log(v)
+        if (v == undefined) return;
+        console.log('change select value:' + v)
       },
       setValue(v){
         console.log('set select value:' + v)
-        if (!v) return;
+        if (v == undefined) return;
         this.value = v;
       }
     }

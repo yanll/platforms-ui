@@ -7,6 +7,10 @@
     YESNO: [
       {value: 1, desc: "是"},
       {value: 0, desc: "否"}
-    ]
+    ],
+    YESNO_: {
+      Y: 1,
+      N: 0
+    }
   }
 </script>

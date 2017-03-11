@@ -69,7 +69,7 @@
     methods: {
       renderContent(h, {node, data, store}) {
         let ope;
-        if (data.editable != 0) {
+        if (data.editable == Dict.YESNO_.Y) {
           ope = (
             <span style="margin-left: 10px; margin-right: 10px;">
               <el-button type="text" size="small" on-click={() => this.del(store, data)}>删除</el-button>

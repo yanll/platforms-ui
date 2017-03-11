@@ -76,7 +76,7 @@
           id: v.form.id
         };
         var url_ = '/permission_group';
-        if (params.id && params.id != '') {
+        if (params.id != undefined && params.id != '') {
           v.$api.put(url_, params, function (resp) {
             v.dialog_form = false;
             v.load_data();
@@ -98,7 +98,7 @@
       detail: function (row) {
         var v = this;
         v.dialog_form = true;
-        if (!row.id) {
+        if (row.id == undefined) {
           //v.$refs['form'].resetFields();//todo-yll-fixme 不起作用
           v.form.groupName = '';
           v.form.id = '';

@@ -73,7 +73,7 @@
       load_data: function (params) {
         var v = this;
         var url_ = '/user/list';
-        if (v.$refs.paginator) {
+        if (v.$refs.paginator != undefined) {
           var pagination = '?page=' + v.$refs.paginator.page + '&limit=' + v.$refs.paginator.limit;
           url_ += pagination;
         }
@@ -91,7 +91,7 @@
           id: v.form.id
         };
         var url_ = '/user';
-        if (params.id && params.id != '') {
+        if (params.id != undefined && params.id != '') {
           v.$api.put(url_, params, function (resp) {
             v.dialog_form = false;
             v.load_data();
@@ -113,21 +113,20 @@
       detail: function (row) {
         var v = this;
         v.dialog_form = true;
-        if (!row.id) {
+        if (row.id == undefined) {
           v.form.username = '';
           v.form.nickname = '';
           v.form.id = '';
-          v.form.enabled = 0;
+          v.form.enabled = Dict.YESNO_.N;
+          console.log(v.$refs);
+          console.log(v.$refs.enabledSelect);
           return;
         }
         var url_ = '/user/' + row.id;
         v.$api.get(url_, {}, function (resp) {
-          console.log(resp);
           v.form.username = resp.data.username;
           v.form.nickname = resp.data.nickname;
           v.form.enabled = resp.data.enabled;
-          console.log(v.$refs.enabledSelect);
-          console.log(resp.data.enabled);
           v.$refs.enabledSelect.setValue(resp.data.enabled);
           v.form.id = resp.data.id;
         })

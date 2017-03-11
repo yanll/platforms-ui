@@ -32,7 +32,7 @@
     methods: {
       load_data: function (params) {
         var v = this;
-        if (!params) params = {}
+        if (params == undefined) params = {}
         var url = '/permission_group/' + v.$route.params.id + '/permissions';
         v.$api.get(url, params, function (resp) {
           console.log(resp);

@@ -47,7 +47,7 @@ function filter_null(o) {
  */
 function _api_base(method, type, url, params, success, failure) {
   var r = request(method, API_SERVER + url).type(type)
-  if (params) {
+  if (params != undefined && params != null) {
     params = filter_null(params);
     if (method === 'POST' || method === 'PUT') {
       if (toType(params) == 'object') {
@@ -60,7 +60,7 @@ function _api_base(method, type, url, params, success, failure) {
   }
   r.end(function (err, res) {
     if (err) {
-      if (!res) {
+      if (res == undefined) {
         console.log('服务器无响应！');
         return;
       }

@@ -18,9 +18,9 @@
     methods: {
       load_data: function (params) {
         var v = this
-        if (!params) params = {}
-        if (v.navbar_title)console.log(v.navbar_title);
-        if (v.navbar_data)console.log(v.navbar_data.data);
+        if (params == undefined) params = {}
+        if (v.navbar_title != undefined) console.log(v.navbar_title);
+        if (v.navbar_data != undefined) console.log(v.navbar_data.data);
       }
     },
     props: {

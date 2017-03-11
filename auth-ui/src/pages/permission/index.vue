@@ -21,7 +21,7 @@
     methods: {
       get_data: function (params) {
         var v = this
-        if (!params) params = {}
+        if (params == undefined) params = {}
         v.$api.get('/permission/list', params, function (resp) {
           v.list = resp.data;
         })
