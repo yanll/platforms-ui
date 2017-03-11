@@ -19,6 +19,12 @@
       dict_options: {type: Object, defaut: {}},
       placeholder: {type: String, defaut: ''}
     },
+    created () {
+      console.log("DictionarySelect.vue created.");
+    },
+    mounted(){
+      console.log("DictionarySelect.vue mounted.");
+    },
     methods: {
       change(v){
         if (v == undefined) return;

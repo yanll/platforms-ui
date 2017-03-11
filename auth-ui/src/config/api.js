@@ -61,7 +61,7 @@ function _api_base(method, type, url, params, success, failure) {
   r.end(function (err, res) {
     if (err) {
       if (res == undefined) {
-        console.log('服务器无响应！');
+        console.log('服务器无响应，请稍后再试！');
         return;
       }
       console.log('API Error, HTTP CODE: ' + res.status);

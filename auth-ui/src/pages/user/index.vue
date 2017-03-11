@@ -27,7 +27,7 @@
           <el-input v-model="form.nickname"></el-input>
         </el-form-item>
         <el-form-item label="启用">
-          <enabledSelect v-model="form.enabled" placeholder="请选择是否启用" ref="enabledSelect"
+          <enabledSelect placeholder="请选择是否启用" ref="enabledSelect"
                          :dict_options="enabled_options"/>
         </el-form-item>
       </el-form>
@@ -46,6 +46,8 @@
   import NavBar from '../../components/common/NavBar.vue'
   import DictionarySelect from '../../components/common/DictionarySelect.vue'
   import Dict from '../../components/const/Dict.vue'
+
+
   export default {
     components: {
       "paginator": Paginator,
@@ -87,9 +89,9 @@
         var params = {
           username: v.form.username,
           nickname: v.form.nickname,
-          enabled: v.form.enabled,
-          id: v.form.id
-        };
+          id: v.form.id,
+          enabled: v.$refs.enabledSelect.value
+        }
         var url_ = '/user';
         if (params.id != undefined && params.id != '') {
           v.$api.put(url_, params, function (resp) {
@@ -117,16 +119,13 @@
           v.form.username = '';
           v.form.nickname = '';
           v.form.id = '';
-          v.form.enabled = Dict.YESNO_.N;
-          console.log(v.$refs);
-          console.log(v.$refs.enabledSelect);
+          if (v.$refs.enabledSelect) v.$refs.enabledSelect.setValue(Dict.YESNO_.N);
           return;
         }
         var url_ = '/user/' + row.id;
         v.$api.get(url_, {}, function (resp) {
           v.form.username = resp.data.username;
           v.form.nickname = resp.data.nickname;
-          v.form.enabled = resp.data.enabled;
           v.$refs.enabledSelect.setValue(resp.data.enabled);
           v.form.id = resp.data.id;
         })
