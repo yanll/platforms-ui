@@ -4,6 +4,10 @@
       {value: 1, desc: "授权控制台"},
       {value: 2, desc: "监控控制台"}
     ],
+    SYSTEM_PORTAL_: {
+      AUTH_CONSOLE: 1,
+      MONITOR_CONSOLE: 2
+    },
     YESNO: [
       {value: 1, desc: "是"},
       {value: 0, desc: "否"}

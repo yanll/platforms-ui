@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <el-row>
-      <el-col :span="24">
+      <el-col span="24">
         <Top></Top>
       </el-col>
     </el-row>
-    <el-row :gutter="6">
-      <el-col :span="4">
+    <el-row>
+      <el-col span="4">
         <div class="grid-content bg-purple">
           <NaviMenu></NaviMenu>
         </div>
       </el-col>
-      <el-col :span="20">
-        <div class="grid-content bg-purple-light">
+      <el-col span="20">
+        <div class="grid-content bg-purple-light" style="padding-left: 6px;">
           <Container></Container>
         </div>
       </el-col>

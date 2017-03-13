@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: white">
-    <breadcrumb :breadcrumb_title="breadcrumb_title"></breadcrumb>
+    <breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="permissionName" label="权限名称" width="180"></el-table-column>
       <el-table-column prop="url" label="路由地址"></el-table-column>
@@ -22,7 +22,12 @@
     },
     data() {
       return {
-        breadcrumb_title: '首页 > 系统管理 > 权限分组 > 权限设置',
+        breadcrumb_data: [
+          {path: '/', name: '首页'},
+          {path: '', name: '系统管理'},
+          {path: '/permission_group', name: '权限分组'},
+          {path: '/permission_group/permissions', name: '权限设置'}
+        ],
         list: []
       }
     },

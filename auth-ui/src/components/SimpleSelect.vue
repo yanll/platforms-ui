@@ -20,10 +20,10 @@
       placeholder: {type: String, defaut: ''}
     },
     created () {
-      console.log("DictionarySelect.vue created.");
+      console.log("SimpleSelect.vue created.");
     },
     mounted(){
-      console.log("DictionarySelect.vue mounted.");
+      console.log("SimpleSelect.vue mounted.");
     },
     methods: {
       change(v){

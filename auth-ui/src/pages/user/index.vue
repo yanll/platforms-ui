@@ -1,9 +1,11 @@
 <template>
   <div style="background-color: white">
-    <breadcrumb :breadcrumb_title="breadcrumb_title"></breadcrumb>
-    <el-row>
-      <el-button type="text" @click="detail">添加</el-button>
-    </el-row>
+    <breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>
+    <el-form :inline="true" :model="search_form">
+      <el-form-item>
+        <el-button type="primary" @click="detail">添加</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="username" label="用户名称" width="180"></el-table-column>
       <el-table-column prop="nickname" label="昵称"></el-table-column>
@@ -42,7 +44,7 @@
 <script>
   import Paginator from '../../components/Paginator.vue'
   import Breadcrumb from '../../components/Breadcrumb.vue'
-  import DictionarySelect from '../../components/DictionarySelect.vue'
+  import SimpleSelect from '../../components/SimpleSelect.vue'
   import Dict from '../../components/Dict.vue'
 
 
@@ -50,11 +52,15 @@
     components: {
       "paginator": Paginator,
       "breadcrumb": Breadcrumb,
-      "enabledSelect": DictionarySelect
+      "enabledSelect": SimpleSelect
     },
     data() {
       return {
-        breadcrumb_title: '首页 > 系统管理 > 用户管理',
+        breadcrumb_data: [
+          {path: '/', name: '首页'},
+          {path: '', name: '系统管理'},
+          {path: '/user', name: '用户管理'}
+        ],
         list: [],
         dialog_form: false,
         enabled_options: Dict.YESNO,

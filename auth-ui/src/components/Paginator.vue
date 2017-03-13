@@ -1,6 +1,5 @@
 <template>
-
-  <div class="pagination-wrap">
+  <div style="text-align: right;">
     <el-pagination
       :current-page="page"
       :page-size="limit"
