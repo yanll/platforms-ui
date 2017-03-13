@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: white">
-    <navBar :navbar_title="navbar_title"></navBar>
+    <breadcrumb :breadcrumb_title="breadcrumb_title"></breadcrumb>
     <el-row>
       <el-button type="text" @click="detail">添加</el-button>
     </el-row>
@@ -35,17 +35,17 @@
 
 
 <script>
-  import Paginator from '../../components/common/Paginator.vue'
-  import NavBar from '../../components/common/NavBar.vue'
+  import Paginator from '../../components/Paginator.vue'
+  import Breadcrumb from '../../components/Breadcrumb.vue'
 
   export default {
     components: {
       "paginator": Paginator,
-      "navBar": NavBar
+      "breadcrumb": Breadcrumb
     },
     data() {
       return {
-        navbar_title: '首页 > 系统管理 > 权限分组',
+        breadcrumb_title: '首页 > 系统管理 > 权限分组',
         list: [],
         dialog_form: false,
         form: {

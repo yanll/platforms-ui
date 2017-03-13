@@ -1,14 +1,14 @@
 import 'element-ui/lib/theme-default/index.css'
-import Element from 'element-ui'
+import ElementUI from 'element-ui'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import routes from './config/routers'
+import routes from './scripts/routers'
 
-Vue.use(Element)
+Vue.use(ElementUI)
 Vue.use(VueRouter)
 
-import api from './config/api'
+import api from './scripts/api'
 Vue.prototype.$api = api
 
 const router = new VueRouter({
