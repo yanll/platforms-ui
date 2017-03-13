@@ -123,6 +123,13 @@
           v.load_data();
         })
       },
+      resetpwd: function (row) {
+        var v = this;
+        var url_ = '/user/resetpwd/' + row.id;
+        v.$api.put(url_, {}, function (resp) {
+          v.load_data();
+        })
+      },
       detail: function (row) {
         var v = this;
         //todo-yll-fixme 设置用户名称不可编辑
