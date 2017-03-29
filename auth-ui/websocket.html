@@ -2,11 +2,10 @@
 <html>
 <head>
   <base href="localhost://localhost:8080/">
-  <title>My WebSocket</title>
+  <title>WebSocket</title>
 </head>
 
 <body>
-Welcome<br/>
 <input id="text" type="text"/>
 <button onclick="send()">Send</button>
 <button onclick="closeWebSocket()">Close</button>
@@ -15,12 +14,10 @@ Welcome<br/>
 
 <script type="text/javascript">
   var websocket = null;
-
   //判断当前浏览器是否支持WebSocket
   if ('WebSocket' in window) {
     websocket = new WebSocket("ws://localhost:8080/websocket");
-  }
-  else {
+  } else {
     alert('Not support websocket')
   }
 
