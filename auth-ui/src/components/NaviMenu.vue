@@ -1,31 +1,55 @@
 <template>
-  <el-menu>
-    <el-menu-item @click="router_to('/')" index="2"><i class="el-icon-menu"></i>首页</el-menu-item>
-    <el-submenu index="10">
-      <template slot="title" index="2"><i class="el-icon-menu"></i>系统管理</template>
-      <el-menu-item index="3" @click="router_to('/permission_group')">权限分组</el-menu-item>
-      <el-menu-item index="4" @click="router_to('/menu')">菜单管理</el-menu-item>
-      <el-menu-item index="5" @click="router_to('/user')">用户管理</el-menu-item>
-      <el-submenu index="9">
-        <template slot="title" index="6">日志管理</template>
-        <el-menu-item index="7">系统日志</el-menu-item>
-        <el-menu-item index="8">操作日志</el-menu-item>
-      </el-submenu>
-    </el-submenu>
-  </el-menu>
+  <el-tree default-expand-all="false" @node-click="router_to" :data="tree_data" :props="defaultProps" node-key="id"
+           highlight-current="true">
+  </el-tree>
 </template>
 
 
 <script>
+  import SimpleSelect from '../components/SimpleSelect.vue'
+  import Dict from '../components/Dict.vue'
 
-  export default{
-    methods: {
-      router_to: function (path) {
-        var v = this;
-        v.$router.push({path: path});
+
+  export default {
+    components: {
+      "portalSelect": SimpleSelect
+    },
+    data() {
+      return {
+        tree_data: [],
+        defaultProps: {
+          children: 'children',
+          label: 'menu_name'
+        },
+        dialog_form: false,
+        portal_options: Dict.SYSTEM_PORTAL,
+        search_form: {}
       }
-    }
+    },
+    created() {
+      this.onSearch();
+    },
+    computed: {},
+    methods: {
+      load_data: function (portal_id) {
+        var v = this;
+        var url_ = '/menu/tree/' + portal_id;
+        v.$api.get(url_, {}, function (resp) {
+          console.log(resp);
+          v.tree_data = resp.data;
+        })
+      },
+      onSearch: function () {
+        var v = this;
+        var portal_id = Dict.SYSTEM_PORTAL_.AUTH_CONSOLE;
+        this.load_data(portal_id);
+      },
+      router_to: function (node, n, s) {
+        console.log(node.menu_name);
+        console.log(n);
+        console.log(s);
+        this.$router.push({name: node.menu_code, params: {}})
+      }
+    },
   }
-
 </script>
-

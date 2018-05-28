@@ -24,6 +24,7 @@
   import Top from './components/Top.vue'
   import NaviMenu from './components/NaviMenu.vue'
   import Container from './components/Container.vue'
+
   export default {
     name: 'app',
     components: {

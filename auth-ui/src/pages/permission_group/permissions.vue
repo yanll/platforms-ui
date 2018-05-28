@@ -31,11 +31,12 @@
         list: []
       }
     },
-    created () {
+    created() {
       this.load_data()
     },
     methods: {
       load_data: function (params) {
+        console.log('加载权限列表...');
         var v = this;
         if (params == undefined) params = {}
         var url = '/permission_group/' + v.$route.params.id + '/permissions';

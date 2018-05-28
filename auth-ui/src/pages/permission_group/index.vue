@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: white">
-    <breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>
+    <!--<breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>-->
     <el-form :inline="true" :model="search_form">
       <el-form-item>
         <portalSelectSearch placeholder="请选择系统" ref="portalSelectSearch" :dict_options="portal_options_search"/>
@@ -13,7 +13,7 @@
     <el-table :data="list" stripe border style="width: 100%">
       <el-table-column prop="id" label="ID" width="180"></el-table-column>
       <el-table-column prop="groupName" label="权限组名"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column fixed="right" label="操作" width="380">
         <template scope="scope">
           <el-button type="text" size="small" @click="permissions(scope.row)">权限设置</el-button>
           <el-button type="text" size="small">用户设置</el-button>
@@ -139,7 +139,7 @@
       },
       permissions: function (row) {
         var v = this;
-        v.$router.push({path: 'permission_group/' + row.id + '/permissions'});
+        v.$router.push({path: '/permission_group/' + row.id + '/permissions'});
       },
       onSearch: function () {
         this.load_data();
