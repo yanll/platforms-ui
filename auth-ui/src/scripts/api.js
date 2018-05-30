@@ -61,10 +61,10 @@ function _api_base(method, type, url, params, success, failure) {
   r.end(function (err, res) {
     if (err) {
       if (res == undefined) {
-        console.log('服务器无响应，请稍后再试！');
+        console.error('服务器无响应，请稍后再试！');
         return;
       }
-      console.log('API Error, HTTP CODE: ' + res.status);
+      console.error('API Error, HTTP CODE: ' + res.status);
       return;
     }
     if (res.body.code == 200) {
@@ -75,7 +75,7 @@ function _api_base(method, type, url, params, success, failure) {
       if (failure) {
         failure(res.body);
       } else {
-        console.log('error: ' + JSON.stringify(res.body));
+        console.error('error: ' + JSON.stringify(res.body));
       }
     }
   });

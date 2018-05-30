@@ -33,7 +33,7 @@
     methods: {
       load_data: function (portal_id) {
         var v = this;
-        var url_ = '/menu/tree/' + portal_id;
+        var url_ = '/user/navi/' + portal_id + '/' + 10001;
         v.$api.get(url_, {}, function (resp) {
           console.log(resp);
           v.tree_data = resp.data;
@@ -45,9 +45,8 @@
         this.load_data(portal_id);
       },
       router_to: function (node, n, s) {
-        console.log(node.menu_name);
-        console.log(n);
-        console.log(s);
+        var leaf = node.leaf;
+        if (!leaf) return;
         this.$router.push({name: node.menu_code, params: {}})
       }
     },

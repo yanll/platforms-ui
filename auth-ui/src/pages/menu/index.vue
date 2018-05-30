@@ -10,8 +10,10 @@
           <el-button type="primary" @click="onSearch">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-tree default-expand-all="true" :data="tree_data" :props="defaultProps" node-key="id" highlight-current="true"
-               :render-content="renderContent">
+      <el-tree default-expand-all="true" :data="tree_data" :props="defaultProps" node-key="id" highlight-current="true">
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>{{ node.label }}</span>
+        </span>
       </el-tree>
     </el-col>
   </el-row>
@@ -47,15 +49,27 @@
         search_form: {}
       }
     },
-    created () {
+    created() {
 
+    },
+    mounted() {
+      var v = this;
+      v.$refs.portalSelect.setValue(Dict.SYSTEM_PORTAL_.AUTH_CONSOLE);
+      this.onSearch();
     },
     computed: {},
     methods: {
       renderContent(h, {node, data, store}) {
         return (
-          <span>{node.label}:{data.url}</span>
-        );
+          < span > {node.label
+      }:
+        {
+          data.url
+        }
+      <
+        /span>
+      )
+        ;
       },
       load_data: function (portal_id) {
         var v = this;

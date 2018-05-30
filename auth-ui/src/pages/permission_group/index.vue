@@ -7,7 +7,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch">查询</el-button>
-        <el-button type="primary" @click="detail">添加</el-button>
+        <el-button type="primary" @click="openDialog">添加</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="list" stripe border style="width: 100%">
@@ -17,20 +17,19 @@
         <template scope="scope">
           <el-button type="text" size="small" @click="permissions(scope.row)">权限设置</el-button>
           <el-button type="text" size="small">用户设置</el-button>
-          <el-button type="text" size="small" @click="detail(scope.row)">编辑</el-button>
+          <el-button type="text" size="small" @click="openDialog(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="del(scope.$index, scope.row)">删除</el-button>
-          <el-button type="text" size="small" @click="detail(scope.row)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="权限分组" v-model="dialog_form"
+    <el-dialog title="权限分组" :visible.sync="dialog_form" @close='closeDialog' @open="open"
                :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="myform" :model="myform" label-width="80px">
         <el-form-item label="系统名称">
           <portalSelect placeholder="请选择系统" ref="portalSelect" :dict_options="portal_options"/>
         </el-form-item>
-        <el-form-item label="权限组名">
-          <el-input v-model="form.groupName"></el-input>
+        <el-form-item prop="groupName" label="权限组名">
+          <el-input v-model="myform.groupName"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -66,14 +65,22 @@
         list: [],
         dialog_form: false,
         search_form: {},
-        form: {
+        myform: {
+          id: '',
+          portalSelect: '',
           groupName: ''
         },
         portal_options_search: Dict.SYSTEM_PORTAL,
         portal_options: Dict.SYSTEM_PORTAL
       }
     },
-    created () {
+    created() {
+
+    },
+    mounted() {
+      var v = this;
+      v.$refs.portalSelectSearch.setValue(Dict.SYSTEM_PORTAL_.AUTH_CONSOLE);
+      v.onSearch();
     },
     methods: {
       load_data: function (params) {
@@ -95,10 +102,12 @@
       },
       save: function () {
         var v = this;
+        console.log('点击保存');
+        console.log(v.myform);
         var params = {
-          groupName: v.form.groupName,
+          groupName: v.myform.groupName,
           portalId: v.$refs.portalSelect.value,
-          id: v.form.id,
+          id: v.myform.id,
           enabled: Dict.YESNO_.Y
         };
         var url_ = '/permission_group';
@@ -121,29 +130,41 @@
           v.load_data();
         })
       },
-      detail: function (row) {
+      onSearch: function () {
+        this.load_data();
+      },
+      openDialog: function (row) {
+        console.log('openDialog');
         var v = this;
         v.dialog_form = true;
-        if (row.id == undefined) {
-          //v.$refs['form'].resetFields();//todo-yll-fixme 不起作用
-          v.form.groupName = '';
-          v.form.id = '';
+        if (row == '' || row == undefined || row.id == '' || row.id == undefined) {
           return;
         }
-        var url_ = '/permission_group/' + row.id;
-        v.$api.get(url_, {}, function (resp) {
-          v.form.groupName = resp.data.groupName;
-          v.$refs.portalSelect.setValue(resp.data.portalId);
-          v.form.id = resp.data.id;
+        v.myform.id = row.id;
+        v.myform.groupName = row.groupName;
+        v.$nextTick(() => {
+          v.$refs.portalSelect.setValue(row.portalId);
+        })
+      },
+      open: function (row) {
+        var v = this;
+        console.log('open');
+        console.log(v.$refs);
+        v.$nextTick(() => {
+          console.log('open..');
+          console.log(v.$refs);
         })
       },
       permissions: function (row) {
         var v = this;
-        v.$router.push({path: '/permission_group/' + row.id + '/permissions'});
+        v.$router.push({path: '/permissions/' + row.id});
       },
-      onSearch: function () {
-        this.load_data();
+      closeDialog: function () {
+        console.log('开始清空表单');
+        this.$refs.portalSelect.setValue('');
+        this.$refs.myform.id = '';
+        this.$refs.myform.resetFields()
       }
-    },
+    }
   }
 </script>
