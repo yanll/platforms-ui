@@ -90,7 +90,6 @@
       },
       save: function () {
         var v = this;
-        //todo-yll-fixme 验证不生效
         v.$refs['form'].validate(valid => {
           if (!valid) {
             console.log('validate error!');
@@ -132,7 +131,6 @@
       },
       detail: function (row) {
         var v = this;
-        //todo-yll-fixme 设置用户名称不可编辑
         v.dialog_form = true;
         if (row.id == undefined) {
           v.form.username = '';

@@ -1,4 +1,3 @@
-<!--todo-yll-fixme value 默认值设置-->
 <template>
   <el-select v-model="value" :dict_options="dict_options" :placeholder="placeholder" @change="change" @setValue="setValue">
     <el-option v-for="item in dict_options" :key="item.value" :label="item.desc" :value="item.value"></el-option>

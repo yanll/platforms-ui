@@ -161,8 +161,8 @@
       },
       closeDialog: function () {
         console.log('开始清空表单');
+        this.myform.id = '';
         this.$refs.portalSelect.setValue('');
-        this.$refs.myform.id = '';
         this.$refs.myform.resetFields()
       }
     }
