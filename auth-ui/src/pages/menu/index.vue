@@ -59,18 +59,6 @@
     },
     computed: {},
     methods: {
-      renderContent(h, {node, data, store}) {
-        return (
-          < span > {node.label
-      }:
-        {
-          data.url
-        }
-      <
-        /span>
-      )
-        ;
-      },
       load_data: function (portal_id) {
         var v = this;
         var url_ = '/menu/tree/' + portal_id;

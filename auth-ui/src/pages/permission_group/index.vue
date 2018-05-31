@@ -15,7 +15,7 @@
       <el-table-column prop="groupName" label="权限组名"></el-table-column>
       <el-table-column fixed="right" label="操作" width="380">
         <template scope="scope">
-          <el-button type="text" size="small" @click="permissions(scope.row)">权限设置</el-button>
+          <el-button type="text" size="small" @click="openPermissionDialog(scope.row)">权限设置</el-button>
           <el-button type="text" size="small">用户设置</el-button>
           <el-button type="text" size="small" @click="openDialog(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="del(scope.$index, scope.row)">删除</el-button>
@@ -34,7 +34,20 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialog_form = false">取消</el-button>
-        <el-button type="primary" @click="save">确定</el-button>
+        <el-button type="primary" @click="save">保存</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="权限设置" :visible.sync="dialog_permission" @close='closePermissionDialog'
+               :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+      <el-tree default-expand-all="false" :data="tree_data" :props="defaultProps" node-key="id"
+               highlight-current="true" lazy :load="loadNode" show-checkbox>
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>{{ node.label }}</span>
+        </span>
+      </el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialog_permission = false">取消</el-button>
+        <el-button type="primary" @click="savePermission">保存</el-button>
       </div>
     </el-dialog>
     <paginator @load_data="load_data" ref="paginator" :page="page" :limit="limit" :total="total"></paginator>
@@ -63,8 +76,14 @@
           {path: '/permission_group', name: '权限分组'}
         ],
         list: [],
+        dialog_permission: false,
         dialog_form: false,
         search_form: {},
+        tree_data: [],
+        defaultProps: {
+          children: 'children',
+          label: 'menu_name'
+        },
         myform: {
           id: '',
           portalSelect: '',
@@ -153,7 +172,7 @@
         v.$nextTick(() => {
           console.log('open..');
           console.log(v.$refs);
-        })
+        });
       },
       permissions: function (row) {
         var v = this;
@@ -163,7 +182,24 @@
         console.log('开始清空表单');
         this.myform.id = '';
         this.$refs.portalSelect.setValue('');
-        this.$refs.myform.resetFields()
+        this.$refs.myform.resetFields();
+      },
+      openPermissionDialog: function (row) {
+        var v = this;
+        v.dialog_permission = true;
+        var url_ = '/user/navi/' + row.portalId + '/' + 10001;
+        v.$api.get(url_, {}, function (resp) {
+          console.log(resp);
+          v.tree_data = resp.data;
+        })
+
+      },
+      closePermissionDialog: function () {
+
+      },
+      loadNode(node, resolve) {
+        console.log(node);
+        console.log(resolve);
       }
     }
   }
