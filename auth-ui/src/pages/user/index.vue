@@ -1,6 +1,5 @@
 <template>
   <div style="background-color: white">
-    <breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>
     <el-form :inline="true" :model="search_form">
       <el-form-item>
         <el-button type="primary" @click="detail">添加</el-button>
@@ -43,7 +42,6 @@
 
 <script>
   import Paginator from '../../components/Paginator.vue'
-  import Breadcrumb from '../../components/Breadcrumb.vue'
   import SimpleSelect from '../../components/SimpleSelect.vue'
   import Dict from '../../components/Dict.vue'
 
@@ -51,16 +49,10 @@
   export default {
     components: {
       "paginator": Paginator,
-      "breadcrumb": Breadcrumb,
       "enabledSelect": SimpleSelect
     },
     data() {
       return {
-        breadcrumb_data: [
-          {path: '/', name: '首页'},
-          {path: '', name: '系统管理'},
-          {path: '/user', name: '用户管理'}
-        ],
         list: [],
         dialog_form: false,
         enabled_options: Dict.YESNO,
@@ -72,8 +64,11 @@
         }
       }
     },
-    created () {
-      this.load_data()
+    created() {
+
+    },
+    mounted() {
+      this.load_data();
     },
     methods: {
       load_data: function (params) {
@@ -83,6 +78,7 @@
           var pagination = '?page=' + v.$refs.paginator.page + '&limit=' + v.$refs.paginator.limit;
           url_ += pagination;
         }
+        console.log('请求用户列表：' + url_);
         v.$api.get(url_, params, function (resp) {
           v.list = resp.data.items;
           v.total = resp.data.pagination.total;

@@ -10,7 +10,6 @@
 
   export default {
     methods: {},
-
     socket: {
       events: {
         // changed(msg) {

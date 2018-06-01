@@ -38,16 +38,15 @@
       </div>
     </el-dialog>
     <el-dialog title="权限设置" :visible.sync="dialog_permission" @close='closePermissionDialog'
-               :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+               :close-on-click-modal="true" :close-on-press-escape="true" :show-close="true">
       <el-tree default-expand-all="false" :data="tree_data" :props="defaultProps" node-key="id"
-               highlight-current="true" lazy :load="loadNode" show-checkbox>
+               highlight-current="true" show-checkbox>
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
         </span>
       </el-tree>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialog_permission = false">取消</el-button>
-        <el-button type="primary" @click="savePermission">保存</el-button>
       </div>
     </el-dialog>
     <paginator @load_data="load_data" ref="paginator" :page="page" :limit="limit" :total="total"></paginator>
@@ -187,7 +186,7 @@
       openPermissionDialog: function (row) {
         var v = this;
         v.dialog_permission = true;
-        var url_ = '/user/navi/' + row.portalId + '/' + 10001;
+        var url_ = '/permission_group/permissions/' + row.portalId + '/' + row.id;
         v.$api.get(url_, {}, function (resp) {
           console.log(resp);
           v.tree_data = resp.data;
@@ -196,10 +195,6 @@
       },
       closePermissionDialog: function () {
 
-      },
-      loadNode(node, resolve) {
-        console.log(node);
-        console.log(resolve);
       }
     }
   }

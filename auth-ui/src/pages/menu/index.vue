@@ -1,7 +1,6 @@
 <template>
   <el-row>
     <el-col span="24">
-      <breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>
       <el-form :inline="true" :model="search_form">
         <el-form-item>
           <portalSelect placeholder="请选择系统" ref="portalSelect" :dict_options="portal_options"/>
@@ -22,23 +21,16 @@
 
 
 <script>
-  import Breadcrumb from '../../components/Breadcrumb.vue'
   import SimpleSelect from '../../components/SimpleSelect.vue'
   import Dict from '../../components/Dict.vue'
 
 
   export default {
     components: {
-      "breadcrumb": Breadcrumb,
       "portalSelect": SimpleSelect
     },
     data() {
       return {
-        breadcrumb_data: [
-          {path: '/', name: '首页'},
-          {path: '', name: '系统管理'},
-          {path: '/menu', name: '菜单管理'}
-        ],
         tree_data: [],
         defaultProps: {
           children: 'children',
@@ -76,6 +68,6 @@
         }
         this.load_data(portal_id);
       }
-    },
+    }
   }
 </script>

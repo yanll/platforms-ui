@@ -13,9 +13,14 @@
   </div>
 </template>
 <script>
+  var DEFAULT_PAGE = 1;
+  var DEFAULT_LIMIT = 20;
+  var DEFAULT_TOTAL = 0;
   export default {
+
     methods: {
       handleSizeChange(val) {
+        this.page = DEFAULT_PAGE;
         this.limit = val;
         this.$emit('load_data');
         console.log(`limit:${val}`);
@@ -27,12 +32,21 @@
       },
       logs(val) {
         console.log(val);
-      },
+      }
     },
     props: {
-      page: {type: Number, default: 1},
-      limit: {type: Number, default: 10},
-      total: {type: Number, default: 0}
+      page: {
+        type: Number,
+        default: DEFAULT_PAGE
+      },
+      limit: {
+        type: Number,
+        default: DEFAULT_LIMIT
+      },
+      total: {
+        type: Number,
+        default: DEFAULT_TOTAL
+      }
     },
     data() {
       return {};

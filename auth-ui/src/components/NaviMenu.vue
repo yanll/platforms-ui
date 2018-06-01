@@ -8,6 +8,7 @@
 <script>
   import SimpleSelect from '../components/SimpleSelect.vue'
   import Dict from '../components/Dict.vue'
+  import Const from '../components/Const.vue'
 
 
   export default {
@@ -33,7 +34,7 @@
     methods: {
       load_data: function (portal_id) {
         var v = this;
-        var url_ = '/user/navi/' + portal_id + '/' + 10001;
+        var url_ = '/user/navi/' + portal_id + '/' + Const.MOCK_USER.ADMIN;
         v.$api.get(url_, {}, function (resp) {
           console.log(resp);
           v.tree_data = resp.data;
@@ -49,6 +50,6 @@
         if (!leaf) return;
         this.$router.push({name: node.menu_code, params: {}})
       }
-    },
+    }
   }
 </script>
