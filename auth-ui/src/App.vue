@@ -1,38 +1,55 @@
 <template>
-  <div id="app">
-    <el-row>
-      <el-col span="24">
-        <Top></Top>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col span="4">
-        <div class="grid-content bg-purple">
-          <NaviMenu></NaviMenu>
-        </div>
-      </el-col>
-      <el-col span="20">
-        <div class="grid-content bg-purple-light" style="padding-left: 6px;">
-          <Container></Container>
-        </div>
-      </el-col>
-    </el-row>
+  <div>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
-<script>
-  import Top from './components/Top.vue'
-  import NaviMenu from './components/NaviMenu.vue'
-  import Container from './components/Container.vue'
+<style lang="scss">
+  body {
+    /*background: #1F2D3D;*/
+    margin: 0px;
+    padding: 0px;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
 
+  #app {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+  }
 
-  export default {
-    name: 'app',
-    components: {
-      Top,
-      NaviMenu,
-      Container
+  .el-submenu [class^=fa] {
+    vertical-align: baseline;
+    margin-right: 10px;
+  }
+
+  .el-menu-item [class^=fa] {
+    vertical-align: baseline;
+    margin-right: 10px;
+  }
+
+  .toolbar {
+    /*border:1px solid #dfe6ec;*/
+    background: #f2f2f2;
+    padding: 10px;
+    margin: 10px 0px;
+    .el-form-item {
+      margin-bottom: 10px;
     }
   }
-</script>
 
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all .2s ease;
+  }
+
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0;
+  }
+</style>

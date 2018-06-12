@@ -4,11 +4,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
 import routes from './scripts/routers'
+import api from './scripts/api'
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 
-import api from './scripts/api'
+
+
 Vue.prototype.$api = api
 
 const router = new VueRouter({
@@ -17,10 +20,8 @@ const router = new VueRouter({
 
 Vue.config.silent = true
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   template: '<App/>',
-  components: {App},
+  render: h => h(App),
   router
-})
+}).$mount('#app')
