@@ -36,10 +36,15 @@
         console.log('开始加载菜单数据...');
         var v = this;
         var url_ = '/user/navi/' + portal_id + '/' + Const.MOCK_USER.ADMIN;
-        v.$api.get(url_, {}, function (resp) {
-          console.log(resp);
-          v.tree_data = resp.data;
-        })
+        v.$Ajax.get(url_, {}, s => {
+
+        }, f => {
+
+        });
+        // v.$api.get(url_, {}, function (resp) {
+        //   console.log(resp);
+        //   v.tree_data = resp.data;
+        // })
       },
       onSearch: function () {
         var v = this;

@@ -1,56 +1,60 @@
 <template>
-  <div style="background-color: white">
-    <!--<breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>-->
-    <el-form :inline="true" :model="search_form">
-      <el-form-item>
-        <portalSelectSearch placeholder="请选择系统" ref="portalSelectSearch" :dict_options="portal_options_search"/>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSearch">查询</el-button>
-        <el-button type="primary" @click="openDialog">添加</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table :data="list" stripe border style="width: 100%">
-      <el-table-column prop="id" label="ID" width="180"></el-table-column>
-      <el-table-column prop="groupName" label="权限组名"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="380">
-        <template scope="scope">
-          <el-button type="text" size="small" @click="openPermissionDialog(scope.row)">权限设置</el-button>
-          <el-button type="text" size="small">用户设置</el-button>
-          <el-button type="text" size="small" @click="openDialog(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="del(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-dialog title="权限分组" :visible.sync="dialog_form" @close='closeDialog' @open="open"
-               :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-      <el-form ref="myform" :model="myform" label-width="80px">
-        <el-form-item label="系统名称">
-          <portalSelect placeholder="请选择系统" ref="portalSelect" :dict_options="portal_options"/>
+
+
+  <el-row class="warp">
+    <el-col span="24">
+      <!--<breadcrumb :breadcrumb_data="breadcrumb_data"></breadcrumb>-->
+      <el-form :inline="true" :model="search_form">
+        <el-form-item>
+          <portalSelectSearch placeholder="请选择系统" ref="portalSelectSearch" :dict_options="portal_options_search"/>
         </el-form-item>
-        <el-form-item prop="groupName" label="权限组名">
-          <el-input v-model="myform.groupName"></el-input>
+        <el-form-item>
+          <el-button type="primary" @click="onSearch">查询</el-button>
+          <el-button type="primary" @click="openDialog">添加</el-button>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialog_form = false">取消</el-button>
-        <el-button type="primary" @click="save">保存</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="权限设置" :visible.sync="dialog_permission" @close='closePermissionDialog'
-               :close-on-click-modal="true" :close-on-press-escape="true" :show-close="true">
-      <el-tree default-expand-all="false" :data="tree_data" :props="defaultProps" node-key="id"
-               highlight-current="true" show-checkbox>
+      <el-table :data="list" stripe border style="width: 100%;">
+        <el-table-column prop="id" label="ID" width="180"></el-table-column>
+        <el-table-column label="操作" width="380">
+          <template scope="scope">
+            <el-button type="text" size="small" @click="openPermissionDialog(scope.row)">权限设置</el-button>
+            <el-button type="text" size="small">用户设置</el-button>
+            <el-button type="text" size="small" @click="openDialog(scope.row)">编辑</el-button>
+            <el-button type="text" size="small" @click="del(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column prop="groupName" label="权限组名s"></el-table-column>
+      </el-table>
+      <el-dialog title="权限分组" :visible.sync="dialog_form" @close='closeDialog' @open="open"
+                 :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+        <el-form ref="myform" :model="myform" label-width="80px">
+          <el-form-item label="系统名称">
+            <portalSelect placeholder="请选择系统" ref="portalSelect" :dict_options="portal_options"/>
+          </el-form-item>
+          <el-form-item prop="groupName" label="权限组名">
+            <el-input v-model="myform.groupName"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialog_form = false">取消</el-button>
+          <el-button type="primary" @click="save">保存</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title="权限设置" :visible.sync="dialog_permission" @close='closePermissionDialog'
+                 :close-on-click-modal="true" :close-on-press-escape="true" :show-close="true">
+        <el-tree default-expand-all="false" :data="tree_data" :props="defaultProps" node-key="id"
+                 highlight-current="true" show-checkbox>
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
         </span>
-      </el-tree>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialog_permission = false">取消</el-button>
-      </div>
-    </el-dialog>
-    <paginator @load_data="load_data" ref="paginator" :page="page" :limit="limit" :total="total"></paginator>
-  </div>
+        </el-tree>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialog_permission = false">取消</el-button>
+        </div>
+      </el-dialog>
+      <paginator @load_data="load_data" ref="paginator" :page="page" :limit="limit" :total="total"></paginator>
+    </el-col>
+  </el-row>
 </template>
 
 

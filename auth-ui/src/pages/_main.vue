@@ -2,28 +2,27 @@
   <el-row class="container">
     <!--头部-->
     <el-col :span="24" class="topbar-wrap">
-      <div class="topbar-logo topbar-btn">
-        <a href="/"><img src="../assets/logo.png" style="padding-left:8px;"></a>
-      </div>
-      <div class="topbar-logos" v-show="!collapsed">
-        <a href="/"><img src="../assets/logo.png"></a>
-      </div>
       <div class="topbar-title">
-        <span style="font-size: 18px;color: #fff;">M</span>
+        <span style="font-size: 18px;color: #fff;">后台管理系统</span>
+        <!--展开折叠开关-->
+        <span class="menu-toggle" style="margin-left: 48px;" @click.prevent="collapse">
+          <span style="cursor: pointer" v-show="!collapsed">收起</span>
+          <span style="cursor: pointer" v-show="collapsed">展开</span>
+        </span>
       </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
           <span class="el-dropdown-link userinfo-inner">
             <i class="iconfont icon-user"></i>
-            ADMIN
+              管理员
             <i class="iconfont icon-down"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <div @click=""><span style="color: #555;font-size: 14px;">个人信息</span></div>
+              <div><span style="color: #555;font-size: 14px;">个人信息</span></div>
             </el-dropdown-item>
             <el-dropdown-item>
-              <div @click=""><span style="color: #555;font-size: 14px;">修改密码</span></div>
+              <div><span style="color: #555;font-size: 14px;">修改密码</span></div>
             </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
@@ -35,32 +34,29 @@
     <el-col :span="24" class="main">
       <!--左侧导航-->
       <aside :class="{showSidebar:!collapsed}">
-        <!--展开折叠开关-->
-        <div class="menu-toggle" @click.prevent="collapse">
-          <i class="iconfont icon-menufold" v-show="!collapsed"></i>
-          <i class="iconfont icon-menuunfold" v-show="collapsed"></i>
-        </div>
-        <el-menu :collapse="collapsed">
-          <NaviMenu class="menu-toggle align-left" v-show="!collapsed"></NaviMenu>
-        </el-menu>
+
+        <span v-show="!collapsed">
+          <NaviMenu></NaviMenu>
+        </span>
       </aside>
 
       <!--右侧内容区-->
       <section class="content-container">
         <div class="grid-content bg-purple-light">
-          <Container></Container>
+          <el-col :span="24" class="content-wrapper">
+            <Container></Container>
+          </el-col>
         </div>
       </section>
     </el-col>
 
   </el-row>
 </template>
-
 <script>
-
   import Top from '../components/Top.vue'
   import NaviMenu from '../components/NaviMenu.vue'
   import Container from '../components/Container.vue'
+
 
   export default {
     components: {
@@ -68,64 +64,39 @@
       NaviMenu,
       Container
     },
-    created() {
-
-    },
     data() {
       return {
-        defaultActiveIndex: "0",
-        nickname: '',
         collapsed: false,
       }
     },
     methods: {
-      handleSelect(index) {
-        this.defaultActiveIndex = index;
-      },
-      //折叠导航栏
       collapse: function () {
+        console.log(this.collapsed);
         this.collapsed = !this.collapsed;
       },
-      jumpTo(url) {
-        this.defaultActiveIndex = url;
-        this.$router.push(url); //用go刷新
-      },
-      logout() {
-
-      }
-    },
-    mounted() {
-      let user = localStorage.getItem('access-user');
-      if (user) {
-        user = JSON.parse(user);
-        this.nickname = user.nickname || '';
+      logout: function () {
+        this.$router.push({name: 'login', params: {}})
       }
     }
   }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   .container {
     position: absolute;
     top: 0px;
     bottom: 0px;
     width: 100%;
-
     .topbar-wrap {
       height: 50px;
       line-height: 50px;
       background: #373d41;
       padding: 0px;
-
       .topbar-btn {
         color: #fff;
       }
-      /*.topbar-btn:hover {*/
-      /*background-color: #4A5064;*/
-      /*}*/
       .topbar-logo {
         float: left;
-        width: 59px;
+        width: 60px;
         line-height: 26px;
       }
       .topbar-logos {
@@ -133,17 +104,12 @@
         width: 120px;
         line-height: 26px;
       }
-      .topbar-logo img, .topbar-logos img {
-        height: 40px;
-        margin-top: 5px;
-        margin-left: 2px;
-      }
       .topbar-title {
         float: left;
         text-align: left;
         width: 200px;
         padding-left: 10px;
-        border-left: 1px solid #000;
+        border-left: 0px solid #000;
       }
       .topbar-account {
         float: right;
@@ -165,72 +131,35 @@
       bottom: 0px;
       overflow: hidden;
     }
-
     aside {
-      min-width: 50px;
-      background: #333744;
+      width: 0px;
+      background: #4A5064;
       &::-webkit-scrollbar {
         display: none;
       }
-
       &.showSidebar {
         overflow-x: hidden;
         overflow-y: auto;
-      }
-
-      .el-menu {
-        height: 100%; /*写给不支持calc()的浏览器*/
-        height: -moz-calc(100% - 80px);
-        height: -webkit-calc(100% - 80px);
-        height: calc(100% - 80px);
-        border-radius: 0px;
-        background-color: #333744;
-        border-right: 0px;
-      }
-
-      .el-submenu .el-menu-item {
-        min-width: 60px;
-      }
-      .el-menu {
-        width: 180px;
-      }
-      .el-menu--collapse {
-        width: 60px;
-      }
-
-      .el-menu .el-menu-item, .el-submenu .el-submenu__title {
-        height: 46px;
-        line-height: 46px;
-      }
-
-      .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
-        background-color: #7ed2df;
+        width: 200px;
       }
     }
-
     .menu-toggle {
       background: #4A5064;
       text-align: center;
       color: white;
       height: 26px;
-      line-height: 30px;
+      line-height: 26px;
     }
-
     .content-container {
       background: #fff;
       flex: 1;
       overflow-y: auto;
-      padding: 10px;
-      padding-bottom: 1px;
-
+      padding: 6px;
+      padding-bottom: 0px;
       .content-wrapper {
         background-color: #fff;
         box-sizing: border-box;
       }
-    }
-
-    .align-left {
-      text-align: left;
     }
   }
 </style>

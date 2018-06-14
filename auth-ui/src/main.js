@@ -2,9 +2,13 @@ import 'element-ui/lib/theme-default/index.css'
 import ElementUI from 'element-ui'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios';
 import App from './App'
 import routes from './scripts/routers'
 import api from './scripts/api'
+import Ajax from './scripts/Ajax'
+import './assets/iconfont.css'
+import './assets/styles/main.scss'
 
 
 Vue.use(ElementUI)
@@ -12,7 +16,8 @@ Vue.use(VueRouter)
 
 
 
-Vue.prototype.$api = api
+Vue.prototype.$api = api;
+Vue.prototype.$Ajax = Ajax;
 
 const router = new VueRouter({
   routes

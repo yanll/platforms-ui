@@ -1,11 +1,11 @@
 <template>
-  <div style="background-color: white">
+  <div>
     <el-form :inline="true" :model="search_form">
       <el-form-item>
         <el-button type="primary" @click="detail">添加</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="list" stripe border style="width: 100%">
+    <el-table :data="list" stripe border>
       <el-table-column prop="username" label="用户名称" width="180"></el-table-column>
       <el-table-column prop="nickname" label="昵称"></el-table-column>
       <el-table-column prop="enabled" label="是否启用" :formatter="formatEnabled"></el-table-column>
