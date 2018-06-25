@@ -1,12 +1,12 @@
 <script>
   export default {
     SYSTEM_PORTAL: [
-      {value: 1, desc: "授权控制台"},
-      {value: 2, desc: "监控控制台"}
+      {value: 'auth_console', desc: "授权控制台"},
+      {value: 'monitor_console', desc: "监控控制台"}
     ],
     SYSTEM_PORTAL_: {
-      AUTH_CONSOLE: 1,
-      MONITOR_CONSOLE: 2
+      AUTH_CONSOLE: 'auth_console',
+      MONITOR_CONSOLE: 'monitor_console'
     },
     YESNO: [
       {value: 1, desc: "是"},

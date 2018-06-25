@@ -4,7 +4,7 @@ import main from "../pages/main.vue";
 import home from "../pages/home.vue";
 import user from "../pages/user/index.vue";
 import menu from "../pages/menu/index.vue";
-import permission_group from "../pages/permission_group/index.vue";
+import role from "../pages/role/index.vue";
 import permissions from "../pages/permission/index.vue";
 import demo_breadcrumb from "../pages/demo/breadcrumb.vue";
 // 配置路由
@@ -13,7 +13,7 @@ export default [
   {
     name: 'main', path: '/main', component: main, children: [
       {name: 'home', path: '/home', component: home},
-      {name: 'permission_group_manage', path: '/permission_group', component: permission_group},
+      {name: 'role_manage', path: '/role', component: role},
       {name: 'menu_manage', path: '/menu', component: menu},
       {name: 'user_manage', path: '/user', component: user},
       {name: 'permission_manage', path: '/permission', component: permissions},
