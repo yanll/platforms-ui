@@ -51,9 +51,9 @@
     },
     computed: {},
     methods: {
-      load_data: function (portal_id) {
+      load_data: function (system_code) {
         var v = this;
-        var url_ = '/menu/tree/' + portal_id;
+        var url_ = '/menu/tree/' + system_code;
         v.$api.get(url_, {}, function (resp) {
           console.log(resp);
           v.tree_data = resp.data;
@@ -61,12 +61,12 @@
       },
       onSearch: function () {
         var v = this;
-        var portal_id = v.$refs.portalSelect.value;
-        if (portal_id == undefined || portal_id == '') {
+        var system_code = v.$refs.portalSelect.value;
+        if (system_code == undefined || system_code == '') {
           console.log("请选择系统！");
           return;
         }
-        this.load_data(portal_id);
+        this.load_data(system_code);
       }
     }
   }

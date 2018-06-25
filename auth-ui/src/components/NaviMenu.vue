@@ -32,10 +32,10 @@
     },
     computed: {},
     methods: {
-      load_data: function (portal_id) {
+      load_data: function (system_code) {
         console.log('开始加载菜单数据...');
         var v = this;
-        var url_ = '/user/navi/' + portal_id + '/' + Const.MOCK_USER.ADMIN;
+        var url_ = '/user/navi/' + system_code + '/' + Const.MOCK_USER.ADMIN;
         v.$Ajax.get(url_, {}, s => {
 
         }, f => {
@@ -48,8 +48,8 @@
       },
       onSearch: function () {
         var v = this;
-        var portal_id = Dict.SYSTEM_PORTAL_.AUTH_CONSOLE;
-        this.load_data(portal_id);
+        var system_code = Dict.SYSTEM_PORTAL_.AUTH_CONSOLE;
+        this.load_data(system_code);
       },
       router_to: function (node, n, s) {
         var leaf = node.leaf;

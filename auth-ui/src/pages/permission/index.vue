@@ -54,12 +54,12 @@
         console.log('加载权限列表...');
         var v = this;
         if (params == undefined) params = {}
-        var portal_id = v.$refs.portalSelectSearch.value;
-        if (portal_id == undefined || portal_id == '') {
+        var system_code = v.$refs.portalSelectSearch.value;
+        if (system_code == undefined || system_code == '') {
           console.error("请选择系统！");
           return;
         }
-        var url = '/permission/list/' + portal_id;
+        var url = '/permission/list/' + system_code;
         if (v.$refs.paginator != undefined) {
           var pagination = '?page=' + v.$refs.paginator.page + '&limit=' + v.$refs.paginator.limit;
           url += pagination;

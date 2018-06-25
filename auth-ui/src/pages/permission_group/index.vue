@@ -107,12 +107,12 @@
     methods: {
       load_data: function (params) {
         var v = this;
-        var portal_id = v.$refs.portalSelectSearch.value;
-        if (portal_id == undefined || portal_id == '') {
+        var system_code = v.$refs.portalSelectSearch.value;
+        if (system_code == undefined || system_code == '') {
           console.error("请选择系统！");
           return;
         }
-        var url_ = '/permission_group/list/' + portal_id;
+        var url_ = '/permission_group/list/' + system_code;
         if (v.$refs.paginator) {
           var pagination = '?page=' + v.$refs.paginator.page + '&limit=' + v.$refs.paginator.limit;
           url_ += pagination;
