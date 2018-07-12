@@ -54,10 +54,24 @@
       load_data: function (system_code) {
         var v = this;
         var url_ = '/menu/tree/' + system_code;
-        v.$api.get(url_, {}, function (resp) {
-          console.log(resp);
-          v.tree_data = resp.data;
-        })
+        var instance = this.$axios.create({
+          baseURL: 'http://127.0.0.1:8080',
+          timeout: 2000,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        instance.get(url_, {}).then(function (resp) {
+          console.log(resp.data)
+          console.log(resp.data.code)
+          if (resp.data.code == 403) {
+            v.$message.error(resp.data.desc);
+            return;
+          }
+          v.tree_data = resp.data.data;
+        }).catch((error) => {
+          console.log(error);
+        });
       },
       onSearch: function () {
         var v = this;

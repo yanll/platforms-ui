@@ -17,6 +17,8 @@
 </template>
 
 <script>
+
+
   export default {
     data() {
       return {
@@ -42,28 +44,40 @@
         this.$refs.loginform.validate((valid) => {
           if (valid) {
             this.logining = true;
-            //NProgress.start();
-            var loginParams = {username: this.loginform.account, password: this.loginform.checkPass};
-            console.log(loginParams);
-            this.$router.push({ name: 'main' });
-
-            // _this.$router.replace('/main');
-            /*requestLogin(loginParams).then(data => {
-              this.logining = false;
-              //NProgress.done();
-              let {msg, code, user} = data;
-              if (code !== 200) {
-                this.$message({
-                  message: msg,
-                  type: 'error'
-                });
-              } else {
-                sessionStorage.setItem('user', JSON.stringify(user));
-                this.$router.push({path: '/table'});
+            var loginParams = {
+              username: this.loginform.account,
+              password: this.loginform.checkPass
+            };
+            var config = {
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Access-Control-Allow-Origin': '*'
               }
-            });*/
+            };
+            console.log(loginParams);
+
+
+            var instance = this.$axios.create({
+              baseURL: 'http://127.0.0.1:8080',
+              timeout: 2000,
+              headers: {'X-Requested-With': 'XMLHttpRequest'}
+            });
+
+            instance.post('/auth/login', loginParams,config).then(function (resp) {
+              if (resp.data.code == 200) {
+                _this.logining = false;
+                _this.$router.push({name: 'main'});
+              } else {
+                _this.logining = false;
+                _this.$message.error(resp.data.desc);
+              }
+            }).catch((error) => {
+              _this.logining = false;
+              console.log(error);
+            });
           } else {
             console.log('login submit error!!');
+            _this.logining = false;
             return false;
           }
         });

@@ -9,7 +9,7 @@
         <a href="/"><img src="../assets/logo.png"></a>
       </div>
       <div class="topbar-title">
-        <span style="font-size: 18px;color: #fff;">M</span>
+        <span style="font-size: 18px;color: #fff;">Manager</span>
       </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
@@ -84,6 +84,7 @@
       },
       //折叠导航栏
       collapse: function () {
+        return;
         this.collapsed = !this.collapsed;
       },
       jumpTo(url) {
@@ -91,7 +92,10 @@
         this.$router.push(url); //用go刷新
       },
       logout() {
-
+        var v = this;
+        this.$axios.get('http://127.0.0.1:8080/auth/logout', {}).then(function (resp) {
+          v.$router.push({name: 'login'});
+        });
       }
     },
     mounted() {
