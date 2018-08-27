@@ -6,7 +6,7 @@ import axios from 'axios';
 import App from './App'
 import routes from './scripts/routers'
 import api from './scripts/api'
-import AxiosUtil from './scripts/AxiosUtil'
+/*import AxiosUtil from './scripts/AxiosUtil'*/
 import './assets/iconfont.css'
 import './assets/styles/main.scss'
 
@@ -19,7 +19,7 @@ Vue.use(VueRouter)
 
 Vue.prototype.$api = api;
 Vue.prototype.$axios = axios;
-Vue.prototype.$AxiosUtil = AxiosUtil;
+/*Vue.prototype.$AxiosUtil = AxiosUtil;*/
 const router = new VueRouter({
   routes
 })
