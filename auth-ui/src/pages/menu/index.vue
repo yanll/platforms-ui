@@ -9,10 +9,54 @@
           <el-button type="primary" @click="onSearch">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-tree default-expand-all="true" :data="tree_data" :props="defaultProps" node-key="id" highlight-current="true">
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>{{ node.label }}</span>
-        </span>
+      <el-row :gutter="0">
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>菜单名称</b></span>
+        </el-col>
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>菜单链接</b></span>
+        </el-col>
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>状态</b></span>
+        </el-col>
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>创建时间</b></span>
+        </el-col>
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>最后修改时间</b></span>
+        </el-col>
+        <el-col :span="4">
+          <span style="text-align: left;font-size: 16px;"><b>操作</b></span>
+        </el-col>
+      </el-row>
+      <br/>
+      <el-tree default-expand-all="true" :data="tree_data" empty-text="-" indent="0" :props="defaultProps" node-key="id"
+               highlight-current="true">
+        <div style="width: 100%" slot-scope="{ node, data }">
+          <el-row :gutter="0">
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">{{ data.menu_name }}</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">-{{ data.url }}</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">-{{ data.status }}</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">-{{ data.create_time }}</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">-{{ data.modify_time }}</span>
+            </el-col>
+            <el-col :span="4">
+              <span style="text-align: left;font-size: 16px;">
+              <el-button type="text" size="mini" @click="() => append_node(data)">编辑</el-button>
+              <el-button v-if="data.id==10001" type="text" size="mini" @click="() => delete_node(data)">删除</el-button>
+              </span>
+            </el-col>
+          </el-row>
+        </div>
       </el-tree>
     </el-col>
   </el-row>
@@ -51,6 +95,13 @@
     },
     computed: {},
     methods: {
+      append_node: function (data) {
+        console.log(this);
+        alert('append_node:' + data.menu_name);
+      },
+      delete_node: function (data) {
+        alert('delete_node:' + data.menu_name);
+      },
       load_data: function (system_code) {
         var v = this;
         var url_ = '/menu/tree/' + system_code;
