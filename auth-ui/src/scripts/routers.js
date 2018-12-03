@@ -7,6 +7,7 @@ import menu from "../pages/menu/index.vue";
 import role from "../pages/role/index.vue";
 import permissions from "../pages/permission/index.vue";
 import demo_breadcrumb from "../pages/demo/breadcrumb.vue";
+import treedemo from "../pages/demo/treedemo.vue";
 // 配置路由
 export default [
   {name: 'login', path: '/', component: login},
@@ -17,7 +18,8 @@ export default [
       {name: 'menu_manage', path: '/menu', component: menu},
       {name: 'user_manage', path: '/user', component: user},
       {name: 'permission_manage', path: '/permission', component: permissions},
-      {name: 'demo_breadcrumb', path: '/demo_breadcrumb', component: demo_breadcrumb}
+      {name: 'demo_breadcrumb', path: '/demo_breadcrumb', component: demo_breadcrumb},
+      {name: 'treedemo', path: '/treedemo', component: treedemo}
     ]
   }
 ]
