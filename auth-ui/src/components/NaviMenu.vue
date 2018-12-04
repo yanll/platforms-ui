@@ -28,7 +28,7 @@
       }
     },
     created() {
-      this.onSearch();
+      /*this.onSearch();*/
     },
     computed: {},
     methods: {
